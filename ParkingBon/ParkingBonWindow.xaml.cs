@@ -19,10 +19,12 @@ namespace ParkingBon
     /// </summary>
     public partial class ParkingBonWindow : Window
     {
+       
         public ParkingBonWindow()
         {
             InitializeComponent();
             Nieuw();
+            
         }
 
 
@@ -31,7 +33,16 @@ namespace ParkingBon
             DatumBon.SelectedDate = DateTime.Now;
             AankomstLabelTijd.Content = DateTime.Now.ToLongTimeString();
             TeBetalenLabel.Content = "0 €";
-            VertrekLabelTijd.Content = AankomstLabelTijd.Content;        
+            VertrekLabelTijd.Content = AankomstLabelTijd.Content;
+            StatusItem.Content = "nieuwe bon";
+            SaveEnAfdruk(false);      
+        }
+        private void SaveEnAfdruk(Boolean actief)
+        {
+            ButtonPrintPreview.IsEnabled = actief;
+            ButtonSave.IsEnabled = actief;
+            ButtonPrintPreview.IsEnabled = actief;
+            ButtonSave.IsEnabled = actief;
         }
 
 
@@ -58,6 +69,26 @@ namespace ParkingBon
                 bedrag += 1;
             TeBetalenLabel.Content = bedrag.ToString() + " €";
             VertrekLabelTijd.Content = Convert.ToDateTime(AankomstLabelTijd.Content).AddHours(0.5 * bedrag).ToLongTimeString();
+        }
+
+        private void NewExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Nieuw();
+        }
+
+        private void SaveExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            Nieuw();
+        }
+
+        private void CloseExecuted(object sender, ExecutedRoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void ButtonNew_Click(object sender, RoutedEventArgs e)
+        {
+            Nieuw();
         }
     }
 }
